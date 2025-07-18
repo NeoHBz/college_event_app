@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'profile_page.dart';
+import 'search_page.dart';
+import 'categories_page.dart';
 
 void main() {
   runApp(CollegeEventApp());
@@ -53,35 +56,54 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF6B73FF),
-              Color(0xFF9B59B6),
-              Colors.white,
-            ],
-            stops: [0.0, 0.3, 1.0],
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              _buildAppBar(),
-              Expanded(
-                child: FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: _buildEventFeed(),
-                ),
-              ),
-            ],
-          ),
+      body: _buildCurrentPage(),
+      bottomNavigationBar: _buildBottomNavBar(),
+      floatingActionButton: _currentIndex == 0 ? _buildFAB() : null,
+    );
+  }
+
+  Widget _buildCurrentPage() {
+    switch (_currentIndex) {
+      case 0:
+        return _buildHomePage();
+      case 1:
+        return SearchPage();
+      case 2:
+        return CategoriesPage();
+      case 3:
+        return ProfilePage();
+      default:
+        return _buildHomePage();
+    }
+  }
+
+  Widget _buildHomePage() {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFF6B73FF),
+            Color(0xFF9B59B6),
+            Colors.white,
+          ],
+          stops: [0.0, 0.3, 1.0],
         ),
       ),
-      bottomNavigationBar: _buildBottomNavBar(),
-      floatingActionButton: _buildFAB(),
+      child: SafeArea(
+        child: Column(
+          children: [
+            _buildAppBar(),
+            Expanded(
+              child: FadeTransition(
+                opacity: _fadeAnimation,
+                child: _buildEventFeed(),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -430,6 +452,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       child: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
+          HapticFeedback.lightImpact();
           setState(() {
             _currentIndex = index;
           });
