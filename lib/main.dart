@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'profile_page.dart';
 import 'search_page.dart';
 import 'categories_page.dart';
+import 'constants/events_data.dart';
 
 void main() {
   runApp(CollegeEventApp());
@@ -136,15 +137,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
           Row(
             children: [
-              _buildIconButton(Icons.search, () {}),
-              SizedBox(width: 12),
               _buildIconButton(Icons.notifications_outlined, () {}),
               SizedBox(width: 12),
-              CircleAvatar(
-                radius: 20,
-                backgroundColor: Colors.white.withOpacity(0.2),
-                child: Icon(Icons.person, color: Colors.white),
-              ),
             ],
           ),
         ],
@@ -172,9 +166,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         onRefresh: _refreshEvents,
         child: ListView.builder(
           physics: BouncingScrollPhysics(),
-          itemCount: events.length,
+          itemCount: EventsData.events.length,
           itemBuilder: (context, index) {
-            return _buildEventCard(events[index], index);
+            return _buildEventCard(EventsData.events[index], index);
           },
         ),
       ),
@@ -527,101 +521,3 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     });
   }
 }
-
-class Event {
-  final String title;
-  final String description;
-  final String date;
-  final String time;
-  final String location;
-  final String organizer;
-  final String category;
-  final Color categoryColor;
-  final IconData icon;
-  final List<Color> gradientColors;
-  int attendees;
-  bool isRSVP;
-
-  Event({
-    required this.title,
-    required this.description,
-    required this.date,
-    required this.time,
-    required this.location,
-    required this.organizer,
-    required this.category,
-    required this.categoryColor,
-    required this.icon,
-    required this.gradientColors,
-    required this.attendees,
-    this.isRSVP = false,
-  });
-}
-
-List<Event> events = [
-  Event(
-    title: 'Tech Talk: AI & ML',
-    description: 'Join us for an exciting discussion about Artificial Intelligence and Machine Learning trends in 2024. Learn from industry experts and network with fellow tech enthusiasts.',
-    date: 'March 15, 2024',
-    time: '2:00 PM',
-    location: 'Computer Science Building, Room 101',
-    organizer: 'CS Department',
-    category: 'Technology',
-    categoryColor: Colors.blue,
-    icon: Icons.computer,
-    gradientColors: [Color(0xFF667eea), Color(0xFF764ba2)],
-    attendees: 245,
-  ),
-  Event(
-    title: 'Spring Music Festival',
-    description: 'Experience the best of student talent at our annual Spring Music Festival. Live performances, food trucks, and amazing vibes!',
-    date: 'March 20, 2024',
-    time: '6:00 PM',
-    location: 'Main Campus Quad',
-    organizer: 'Student Union',
-    category: 'Music',
-    categoryColor: Colors.orange,
-    icon: Icons.music_note,
-    gradientColors: [Color(0xFFf093fb), Color(0xFFf5576c)],
-    attendees: 892,
-  ),
-  Event(
-    title: 'Career Fair 2024',
-    description: 'Meet with top employers and explore career opportunities. Bring your resume and dress professionally for this networking event.',
-    date: 'March 25, 2024',
-    time: '10:00 AM',
-    location: 'University Center',
-    organizer: 'Career Services',
-    category: 'Career',
-    categoryColor: Colors.green,
-    icon: Icons.work,
-    gradientColors: [Color(0xFF4facfe), Color(0xFF00f2fe)],
-    attendees: 567,
-  ),
-  Event(
-    title: 'Art Exhibition',
-    description: 'Discover amazing artwork created by our talented art students. From paintings to sculptures, explore creativity at its finest.',
-    date: 'March 30, 2024',
-    time: '1:00 PM',
-    location: 'Art Gallery, Fine Arts Building',
-    organizer: 'Art Department',
-    category: 'Art',
-    categoryColor: Colors.purple,
-    icon: Icons.palette,
-    gradientColors: [Color(0xFFa8edea), Color(0xFFfed6e3)],
-    attendees: 156,
-  ),
-  Event(
-    title: 'Basketball Championship',
-    description: 'Cheer for our college team in the final championship game. Free snacks and drinks for all students!',
-    date: 'April 5, 2024',
-    time: '7:00 PM',
-    location: 'Sports Complex',
-    organizer: 'Athletics Department',
-    category: 'Sports',
-    categoryColor: Colors.red,
-    icon: Icons.sports_basketball,
-    gradientColors: [Color(0xFFff9a9e), Color(0xFFfecfef)],
-    attendees: 1234,
-  ),
-];
